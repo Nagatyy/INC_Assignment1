@@ -141,6 +141,7 @@ public class Server extends javax.swing.JFrame {
             return;
         }
 
+        
         server = new ServerThread(threadNum, portNum);
         server.start();
         Start.setEnabled(false);
@@ -162,6 +163,11 @@ public class Server extends javax.swing.JFrame {
        
     }//GEN-LAST:event_StopActionPerformed
 
+    public static void displayErrorPane(){
+        JLabel label = new JLabel(" Error - Port not available. It is either in use or in TIME_WAIT");
+        label.setFont(new Font("Arial", Font.BOLD, 18));
+        JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
     /**
      * @param args the command line arguments
      */

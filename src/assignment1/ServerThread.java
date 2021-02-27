@@ -50,12 +50,18 @@ public class ServerThread extends Thread {
         ServerSocket server= null;
         try {
             
+            // So the port goes to TIME_WAIT and not Closed when we press the stop button
+            // the below setReuseAddress(true) attemps to counter this and make the port reusable immediatly
+            // but it does not work for some reason
             server = new ServerSocket();
             server.setReuseAddress(true);
             server.bind(new InetSocketAddress(this.port));
 
         } catch (IOException ex) {
-            Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Cant allocatee port");
+            Server.displayErrorPane();
+            
             return;
         }
         while(isWorking)
@@ -83,6 +89,7 @@ public class ServerThread extends Thread {
                 threads[i].join();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
+               
             }
         }
         
